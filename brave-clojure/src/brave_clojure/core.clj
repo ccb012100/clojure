@@ -18,7 +18,8 @@
 (defn map-set
   "Variation of 'map' that returns a set. Uses 'reduce' for evaluation."
   [func collection]
-  (fn (reduce [coll item]
+  (reduce (fn
+       [coll item]
             (into coll (set [(func item)])))
           #{}
           collection))
