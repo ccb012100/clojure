@@ -19,7 +19,7 @@
   "Variation of 'map' that returns a set. Uses 'reduce' for evaluation."
   [func collection]
   (reduce (fn
-       [coll item]
+            [coll item]
             (into coll (set [(func item)])))
           #{}
           collection))
@@ -31,3 +31,14 @@
             (into coll (set [(func item)])))
           '()
           collection))
+
+(defn filter-reduce
+  "Implementation of 'filter' using reduce."
+  [func collection]
+  (seq (reduce (fn [coll item]
+                 (if (func item)
+                   (let [c coll]
+                     (conj c item))
+                   coll))
+               []
+               collection)))
