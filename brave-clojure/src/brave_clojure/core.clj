@@ -35,10 +35,17 @@
 (defn filter-reduce
   "Implementation of 'filter' using reduce."
   [func collection]
-  (seq (reduce (fn [coll item]
-                 (if (func item)
-                   (let [c coll]
-                     (conj c item))
-                   coll))
-               []
-               collection)))
+  (reduce (fn [coll item]
+            (if (func item)
+              (concat coll (list item))
+              coll))
+          ()
+          collection))
+
+(defn some-reduce
+  "Implementation of 'some' using reduce."
+  [func collection]
+  (reduce (fn [result item]
+            (or (or result (func item)) nil))
+          nil
+          collection))
